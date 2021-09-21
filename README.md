@@ -3,7 +3,7 @@
 Ifanu Antoni <br>
 NRP 05111940000064 <br>
 Kelas D <br>
-Nama Benda __Dadu
+Nama Benda __Dadu__
 
 <hr>
 

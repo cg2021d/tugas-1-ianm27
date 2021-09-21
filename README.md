@@ -1,7 +1,7 @@
 # Tugas 1 Grafika Komputer
 
 Ifanu Antoni <br>
-NRP 05111940000064 <br>
+05111940000064 <br>
 Kelas D <br>
 Nama Benda __Dadu__
 

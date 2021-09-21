@@ -8,10 +8,10 @@ Nama Benda __Dadu
 <hr>
 
 ### Depan Atas
-!(img/depan_atas.jpeg)
+![foto dari depan atas](img/depan_atas.jpeg)
 ### Kanan Atas
-!(img/kanan_atas.jpeg)
+![foto dari kanan atas](img/kanan_atas.jpeg)
 ### Belakang Atas
-!(img/belakang_atas.jpeg)
+![foto dari belakang atas](img/belakang_atas.jpeg)
 ### Kiri Atas
-!(img/kiri_atas.jpeg)
+![foto dari kiri atas](img/kiri_atas.jpeg)

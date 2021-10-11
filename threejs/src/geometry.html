@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Geometry</title>
+        <script src="js/three.min.js"></script>
+    </head>
+    <body>
+        
+    </body>
+</html>
+
+
+    <script>
+        let scene, camera, renderer;
+            
+        // set up the environment - 
+
+        let cone;
+        let createCone = function (){
+            const geometry = new THREE.CylinderGeometry( 3, 0, 5, 12 );
+            const material = new THREE.MeshLambertMaterial( {color: 0xE8F6EF} );
+            cone = new THREE.Mesh( geometry, material );
+            cone.position.set (-12,5);
+            scene.add( cone );
+        }
+
+        let line;
+        let cube;
+        let createCube = function(){
+            const geometry = new THREE.BoxGeometry(4,4,4);
+            const tecture1 = new THREE.TextureLoader().load('tecture/cement-wall.jpg')
+            const material = new THREE.MeshBasicMaterial( {map : tecture1} );
+            cube = new THREE.Mesh( geometry, material);
+            cube.position.set(0,5);
+            scene.add(cube);
+
+            const edges = new THREE.EdgesGeometry( geometry );
+            line = new THREE.LineSegments( edges, new THREE.LineBasicMaterial( { color: 0x000000 } ) );
+            line.position.set(0,5);
+            scene.add( line );
+
+            
+        }
+
+        let sphere;
+        let createSphere = function(){
+            const geometry = new THREE.SphereGeometry( 3, 32, 16, 0, 4 );
+            const material = new THREE.MeshNormalMaterial();
+            sphere = new THREE.Mesh( geometry, material );
+            sphere.position.set(12,5);
+            scene.add( sphere );            
+        }
+
+        let torus;
+        let createTorus = function(){
+            const geometry = new THREE.TorusGeometry( 2, 1, 10, 100 );
+            const material = new THREE.MeshLambertMaterial({color: 0xA12568});
+            torus = new THREE.Mesh( geometry, material );
+            torus.position.set(-18,-5);
+            scene.add( torus );
+        }
+
+        let conewireframe;
+        let createConewireframe=function(){
+            const geometry = new THREE.ConeGeometry( 3, 5, 12 );
+            const wireframe = new THREE.WireframeGeometry( geometry );
+            conewireframe = new THREE.LineSegments( wireframe );
+            conewireframe.material.depthTest = false;
+            conewireframe.material.opacity = 0.25;
+            conewireframe.material.transparent = true;
+            conewireframe.position.set(-6,-5);
+
+            scene.add(conewireframe );
+        }
+
+        let dode;
+        let createDode= function(){
+            const geometry = new THREE.DodecahedronGeometry( 3, 0);
+            const edges = new THREE.EdgesGeometry( geometry );
+            dode = new THREE.LineSegments( edges, new THREE.LineBasicMaterial( { color: 0xffffff } ) );
+            dode.position.set(6,-5);
+            scene.add( dode );
+        }
+
+        let spherewireframe;
+        let createSpherewireframe = function(){
+            const geometry = new THREE.SphereGeometry( 3, 24, 12 );
+            const material = new THREE.MeshBasicMaterial( { color: 0x66DE93, wireframe : true} );
+            spherewireframe = new THREE.Mesh( geometry, material );
+            spherewireframe.position.set(18,-5);
+            scene.add(spherewireframe); 
+
+        }
+
+        // create Lighting
+        let createLight= function() {
+            const pointLight = new THREE.PointLight("#fff", 1);
+            pointLight.position.set(0, -8, 48);
+            scene.add(pointLight);
+        }
+
+        // initiallize scene, camera, objects and renderer
+        let init = function() {
+            // 1. create the scene
+            scene = new THREE.Scene();
+            scene.background = new THREE.Color(0x152D35);
+                
+            // 2. create an locate the camera
+            camera = new THREE.PerspectiveCamera(30, window.innerWidth / window.innerHeight, 1, 1000);
+            camera.position.z = 40;       
+
+                
+            // 3. create an locate the object on the scene 
+            createCone();
+            createCube();
+            createSphere();
+
+            createTorus();
+            createConewireframe();
+            createDode();
+            createSpherewireframe();
+
+            createLight();
+                
+            // 4. create the renderer     
+            renderer = new THREE.WebGLRenderer();   
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            document.body.appendChild(renderer.domElement);
+              
+        };
+          
+            
+        // main animation loop - calls 50-60 in a second.
+        let mainLoop = function() {
+            cone.rotation.x += 0.006;
+            cone.rotation.y += 0.01;
+
+            cube.rotation.x += 0.006;
+            cube.rotation.y += 0.01;
+            
+            sphere.rotation.x += 0.007;
+            sphere.rotation.y += 0.01;
+
+            torus.rotation.x += 0.01;
+            torus.rotation.y += 0.02;
+
+            line.rotation.x += 0.006;
+            line.rotation.y += 0.01;
+
+            dode.rotation.x += 0.01;
+            dode.rotation.y += 0.02;
+
+            spherewireframe.rotation.y += 0.007;
+            conewireframe.rotation.y += 0.02;
+
+
+            renderer.render(scene, camera);
+            requestAnimationFrame(mainLoop);
+        };
+
+        //////////////////////////////////////////////
+        init();
+        mainLoop();
+    </script>
+    

@@ -9,7 +9,7 @@ Kelas D <br>
 ## Geometri dan Material
 ![geometri dan material](media/geometri.gif)
 
-##Lighting
+## Lighting
 
 <hr>
 

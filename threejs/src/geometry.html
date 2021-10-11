@@ -28,7 +28,7 @@
         let cube;
         let createCube = function(){
             const geometry = new THREE.BoxGeometry(4,4,4);
-            const tecture1 = new THREE.TextureLoader().load('media/cement-wall.jpg')
+            const tecture1 = new THREE.TextureLoader().load('../media/cement-wall.jpg')
             const material = new THREE.MeshBasicMaterial( {map : tecture1} );
             cube = new THREE.Mesh( geometry, material);
             cube.position.set(0,5);

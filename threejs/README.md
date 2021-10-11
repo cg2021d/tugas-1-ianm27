@@ -10,9 +10,6 @@ Kelas D <br>
 ![geometri dan material](media/geometry.gif)
 
 ## Lighting
-
-<hr>
-
 ### AmbientLight
 ![ambientlight](media/ambientlight.gif)
 

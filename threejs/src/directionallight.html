@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Geometry</title>
+        <script src="js/three.min.js"></script>
+    </head>
+    <body>
+        
+    </body>
+</html>
+
+
+    <script>
+        let scene, camera, renderer;
+            
+        // set up the environment - 
+        let torus;
+        let createTorus = function(){
+            const geometry = new THREE.TorusGeometry( 3, 1.2, 10, 100 );
+            const material = new THREE.MeshLambertMaterial({color: 0xA12568});
+            torus = new THREE.Mesh( geometry, material );
+            torus.position.set(0, 0);
+            scene.add( torus );
+        }
+
+        // create Lighting
+        let createLight= function() {
+            const directLight = new THREE.DirectionalLight("#fff", 1);
+            directLight.position.set(0, 0, 40);
+            scene.add(directLight);
+        }
+
+        // initiallize scene, camera, objects and renderer
+        let init = function() {
+            // 1. create the scene
+            scene = new THREE.Scene();
+            scene.background = new THREE.Color(0x152D35);
+                
+            // 2. create an locate the camera
+            camera = new THREE.PerspectiveCamera(30, window.innerWidth / window.innerHeight, 1, 1000);
+            camera.position.z = 40;       
+
+                
+            // 3. create an locate the object on the scene 
+            createTorus();
+
+            createLight();
+                
+            // 4. create the renderer     
+            renderer = new THREE.WebGLRenderer();   
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            document.body.appendChild(renderer.domElement);
+              
+        };
+          
+            
+        // main animation loop - calls 50-60 in a second.
+        let mainLoop = function() {
+
+            // torus.rotation.x += 0.01;
+            torus.rotation.y += 0.02;
+
+            renderer.render(scene, camera);
+            requestAnimationFrame(mainLoop);
+        };
+
+        //////////////////////////////////////////////
+        init();
+        mainLoop();
+    </script>
+    

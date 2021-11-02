@@ -1,0 +1,107 @@
+<html>
+    <head>
+        <title>Tugas 4 Individu</title>     
+        <script src = "lib/three.min.js"></script>    
+        <script src = "lib/controls/OrbitControls.js"></script>     
+    </head>
+    <body>
+    </body> 
+</html>
+
+<script>   
+    let scene, camera, renderer, sphere, target, texture;
+    const LEFT = 37, RIGHT = 39, UP = 38, DOWN = 40; 
+    let ADD = 0.005, theta = 0;
+    
+    let createGeometry = function() {
+        texture = new THREE.TextureLoader().load( 'img/pano2.jpg');
+        let material =  new THREE.MeshBasicMaterial({map: texture, side: THREE.DoubleSide});
+        let geometry = new THREE.SphereGeometry(10, 100, 100);
+        sphere = new THREE.Mesh(geometry, material);
+        scene.add(sphere); 
+    };
+    
+    let createOkta = function() {
+        texture = new THREE.TextureLoader().load( 'img/texture.png');
+        const geometry = new THREE.OctahedronGeometry( 1, 1);
+        const material = new THREE.MeshPhysicalMaterial( {map : texture} );
+        okta = new THREE.Mesh( geometry, material );
+        okta.castShadow = true;
+        okta.position.set(0,-2,0);
+        scene.add( okta );
+        
+        //setlighting
+        const light = new THREE.PointLight(0xffffff);
+        light.position.set(-0.5,1.7,4);
+        light.castShadow = true;
+        light.shadow.mapSize.width = 512;
+        light.shadow.mapSize.height = 512;
+        light.shadow.camera.near = 0.5;
+        light.shadow.camera.far = 500;
+        scene.add(light);
+        const light2 = new THREE.AmbientLight( 0xffffbb);
+        scene.add( light2 )
+    };
+
+    let createFog = function(){
+        const color = '0x00FFFF';
+        scene.fog = new THREE.Fog(color, 15, 3);
+    }
+
+    let onKeyDown = function(e) {
+        if(e.keyCode == LEFT) 
+            scene.position.x -=0.1;
+        else if(e.keyCode == RIGHT)
+            scene.position.x +=0.1;
+        else if(e.keyCode == UP)
+            scene.position.z -=0.1;
+        else if(e.keyCode == DOWN)
+            scene.position.z +=0.1;
+    }
+
+    // set up the environment - 
+    // initiallize scene, camera, objects and renderer
+    let init = function() {
+        // create the scene
+        scene = new THREE.Scene();
+        scene.background = new THREE.Color(0xffffff);
+        
+        // create an locate the camera
+        camera = new THREE.PerspectiveCamera(70, 
+                        window.innerWidth / window.innerHeight, 
+                        1, 1000);
+        camera.position.set(9, 0, 0);
+        
+        //CreateObjek
+        createGeometry();
+        createOkta();
+        createFog();
+
+        //create the renderer   
+        renderer = new THREE.WebGLRenderer({antialiasing: true});   
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+        renderer.shadowMap.enabled = true;
+        renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+        
+        //controls
+        controls = new THREE.OrbitControls( camera, renderer.domElement );
+        controls.enableDamping = true;
+        controls.dampingFactor = 0.05;
+        controls.autoRotate = true;
+        controls.screenSpacePanning = false;
+        document.addEventListener("keydown", onKeyDown, false);
+    };
+   
+    // main animation loop - calls 50-60 times per second.
+    let mainLoop = function() {
+        renderer.render(scene, camera);
+        controls.update();
+        requestAnimationFrame(mainLoop);
+        okta.rotation.y +=0.08;
+    };
+    
+    ///////////////////////////////////////////////
+    init();
+    mainLoop();
+</script>
